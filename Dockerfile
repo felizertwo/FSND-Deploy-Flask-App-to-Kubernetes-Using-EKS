@@ -1,11 +1,9 @@
 FROM python:stretch
 
-COPY requirements.txt /
-RUN pip3 install -r /requirements.txt
-
 COPY . /app
 WORKDIR /app
 
-RUN chmod +x gunicorn_starter.sh
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["./gunicorn_starter.sh"]
+CMD ["gunicorn", "-b", ":8080", "main:APP"]
